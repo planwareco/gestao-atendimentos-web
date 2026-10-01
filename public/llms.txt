@@ -1,0 +1,19 @@
+# Atendo
+
+> Sistema SaaS de gestão de atendimentos para prestadores de serviço no Brasil (salões, barbearias, estética, pet shops, fisioterapia, consultorias).
+
+## O que faz
+- Agenda por dia, semana e mês, com bloqueio de conflito de horário e sugestão de horários livres
+- Cadastro de clientes com histórico, total gasto, ticket médio e alerta de retorno
+- Orçamentos com numeração automática, PDF com a marca da empresa e conversão em agendamento
+- Financeiro: despesas por categoria, comissões por profissional e resultado do período
+- Equipe com papéis (proprietário, recepção, profissional)
+- Campos personalizados por segmento (ex.: nome do pet, convênio, evolução da sessão)
+
+## Plano
+- Plano Start com preço base mensal e módulos opcionais (Orçamentos, Financeiro, Multi-profissional)
+- Pagamento da adesão por Pix, cartão ou boleto
+
+## Páginas
+- [Página inicial e preços](https://SEU-DOMINIO/)
+- [Criar conta](https://SEU-DOMINIO/cadastro)

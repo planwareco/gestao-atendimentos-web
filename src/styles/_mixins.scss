@@ -1,0 +1,49 @@
+@use 'sass:map';
+
+// Breakpoints mobile-first (testado a partir de 320px)
+$bp: (sm: 640px, md: 768px, lg: 1024px, xl: 1280px, xxl: 1536px);
+
+@mixin up($key) {
+  @media (min-width: map.get($bp, $key)) { @content; }
+}
+@mixin down($key) {
+  @media (max-width: map.get($bp, $key) - 0.02px) { @content; }
+}
+
+// Foco acessível: redesenhado, nunca removido
+@mixin focus-ring($offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: $offset;
+  }
+}
+
+// Vidro (aproximação web de frosted glass) com fallback sólido
+@mixin glass($alpha: 0.72) {
+  background: rgb(255 255 255 / #{$alpha});
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7), var(--shadow-md);
+  @media (prefers-reduced-transparency: reduce) {
+    background: var(--surface);
+    backdrop-filter: none;
+  }
+}
+
+@mixin truncate { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+@mixin reset-button {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+@mixin scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}

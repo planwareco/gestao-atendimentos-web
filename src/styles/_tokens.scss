@@ -1,0 +1,116 @@
+// Tokens globais. A cor primária e a secundária são sobrescritas em runtime pela
+// aparência da empresa (ver theme/applyTheme.ts). Todos os componentes usam só variáveis.
+:root {
+  --font: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+
+  // Marca: azul-marinho + branco
+  --navy-950: #061231;
+  --navy-900: #0a1b44;
+  --navy-800: #0f2557;
+  --navy-700: #183573;
+  --navy-600: #24478f;
+  --navy-100: #e6ecf8;
+  --navy-50: #f2f5fc;
+
+  --primary-color: #0f2557;
+  --secondary-color: #2f6bff;
+  --primary-contrast: #ffffff;
+  --secondary-contrast: #ffffff;
+
+  --primary: var(--primary-color);
+  --secondary: var(--secondary-color);
+  --primary-strong: color-mix(in srgb, var(--primary) 82%, #000);
+  --primary-soft: color-mix(in srgb, var(--primary) 9%, transparent);
+  --primary-softer: color-mix(in srgb, var(--primary) 5%, transparent);
+  --secondary-soft: color-mix(in srgb, var(--secondary) 12%, transparent);
+
+  --sidebar-bg: color-mix(in srgb, var(--primary) 94%, #000);
+  --sidebar-fg: var(--primary-contrast);
+
+  // Superfícies (neutros levemente frios, puxados para o marinho)
+  --background-color: #f5f7fc;
+  --surface-color: #ffffff;
+  --surface-2: #f8faff;
+  --text-color: #0b1530;
+  --muted-color: #56637f;
+  --subtle-color: #8592ad;
+  --line: #e2e8f3;
+  --line-strong: #cfd8e8;
+
+  --bg: var(--background-color);
+  --surface: var(--surface-color);
+  --text: var(--text-color);
+  --muted: var(--muted-color);
+
+  --success: #12805c;
+  --success-soft: #e3f5ee;
+  --warning: #a8620a;
+  --warning-soft: #fdf1df;
+  --danger: #c4314b;
+  --danger-soft: #fce8ec;
+  --info: #2f6bff;
+  --info-soft: #e7eeff;
+
+  --action: var(--primary);
+  --action-contrast: var(--primary-contrast);
+  --action-hover: var(--primary-strong);
+
+  --focus: color-mix(in srgb, var(--secondary) 80%, #fff);
+
+  // Forma: botões em pílula, cards 20px, inputs 12px (regra única do projeto)
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  // Sombras tingidas de marinho, nunca preto puro
+  --shadow-xs: 0 1px 2px rgb(15 37 87 / 0.06);
+  --shadow-sm: 0 1px 2px rgb(15 37 87 / 0.05), 0 4px 12px -6px rgb(15 37 87 / 0.1);
+  --shadow-md: 0 2px 4px rgb(15 37 87 / 0.04), 0 18px 40px -18px rgb(15 37 87 / 0.22);
+  --shadow-lg: 0 4px 10px rgb(15 37 87 / 0.05), 0 36px 80px -28px rgb(15 37 87 / 0.32);
+
+  // Movimento: rápido e seco no app, mais longo no marketing
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-fast: 160ms;
+  --t-base: 240ms;
+  --t-slow: 520ms;
+
+  // Camadas
+  --z-sticky: 20;
+  --z-sidebar: 40;
+  --z-overlay: 60;
+  --z-modal: 70;
+  --z-toast: 90;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --background-color: #0a1022;
+  --surface-color: #111a33;
+  --surface-2: #0e1630;
+  --text-color: #e7ecf7;
+  --muted-color: #9aa6c2;
+  --subtle-color: #6f7c9b;
+  --line: #1f2b4a;
+  --line-strong: #2b3a5f;
+  --primary-soft: color-mix(in srgb, var(--primary) 26%, transparent);
+  --primary-softer: color-mix(in srgb, var(--primary) 14%, transparent);
+  --sidebar-bg: color-mix(in srgb, var(--primary) 30%, #070c1c);
+  --sidebar-fg: #ffffff;
+  --action: var(--secondary);
+  --action-contrast: var(--secondary-contrast);
+  --action-hover: color-mix(in srgb, var(--secondary) 85%, #fff);
+  --success-soft: rgb(18 128 92 / 0.18);
+  --warning-soft: rgb(168 98 10 / 0.2);
+  --danger-soft: rgb(196 49 75 / 0.2);
+  --info-soft: rgb(47 107 255 / 0.18);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 18px 40px -18px rgb(0 0 0 / 0.6);
+  --shadow-lg: 0 36px 80px -28px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
