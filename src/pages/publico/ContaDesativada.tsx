@@ -5,7 +5,7 @@ import { linkWhatsapp } from '@/lib/masks';
 /** Empresa desativada pelo admin: dados preservados, acesso bloqueado. */
 export default function ContaDesativada() {
   useTitulo('Acesso desativado');
-  const suporte = linkWhatsapp(import.meta.env.VITE_SUPORTE_WHATSAPP as string | undefined, 'Olá! O acesso da minha empresa no Atendo está desativado.');
+  const suporte = linkWhatsapp(import.meta.env.VITE_SUPORTE_WHATSAPP as string | undefined, 'Olá! O acesso da minha empresa no Simbora Gerir está desativado.');
   return (
     <div className="container status-page">
       <div className="status-page__card card card--pad" data-aos="zoom-in">

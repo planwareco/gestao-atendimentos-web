@@ -40,7 +40,7 @@ export function PublicLayout() {
       <span id="topo-sentinela" aria-hidden="true" className="public__sentinel" />
       <header className={cn('pnav', rolou && 'pnav--scrolled', aberto && 'pnav--open')}>
         <div className="pnav__inner">
-          <Link to="/" aria-label="Atendo, página inicial">
+          <Link to="/" aria-label="Simbora Gerir, página inicial">
             <Logo />
           </Link>
           {!enxuto && (
@@ -59,6 +59,12 @@ export function PublicLayout() {
               </ButtonLink>
             ) : (
               <>
+                {!enxuto && (
+                  <NavLink to="/admin/login" className="pnav__login pnav__gestor hide-sm" title="Área do gestor da plataforma">
+                    <i className="bx bx-shield-quarter" aria-hidden="true" />
+                    Gestor
+                  </NavLink>
+                )}
                 <NavLink to="/login" className="pnav__login">
                   Entrar
                 </NavLink>
@@ -84,6 +90,14 @@ export function PublicLayout() {
                 <i className="bx bx-chevron-right" aria-hidden="true" />
               </a>
             ))}
+            {!sessao && (
+              <Link to="/admin/login" onClick={() => setAberto(false)}>
+                <span>
+                  <i className="bx bx-shield-quarter" aria-hidden="true" /> Acesso do gestor
+                </span>
+                <i className="bx bx-chevron-right" aria-hidden="true" />
+              </Link>
+            )}
             {!sessao && (
               <ButtonLink to="/cadastro" block iconRight="bx-right-arrow-alt">
                 Começar agora
@@ -114,11 +128,12 @@ export function PublicLayout() {
               <h2>Conta</h2>
               <Link to="/cadastro">Criar conta</Link>
               <Link to="/login">Entrar</Link>
+              <Link to="/admin/login">Acesso do gestor</Link>
             </div>
           </div>
         </div>
         <div className="pfooter__base">
-          <span>© {new Date().getFullYear()} Atendo. Todos os direitos reservados.</span>
+          <span>© {new Date().getFullYear()} Simbora Gerir. Todos os direitos reservados.</span>
           <span>Pagamentos processados pelo Mercado Pago.</span>
         </div>
       </footer>

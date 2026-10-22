@@ -1048,3 +1048,55 @@
   &__campos { flex: 1; display: grid; gap: 0.8rem; min-width: 0; width: 100%; }
   &__icone { width: 48px; height: 48px; border-radius: 14px; flex: none; display: grid; place-items: center; font-size: 1.4rem; background: var(--primary); color: var(--primary-contrast); }
 }
+
+/* Upload de logo/favicon (Configurações → Aparência) */
+.upload-grid { align-items: start; }
+.upload-img {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  &__area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem;
+    border: 1.5px dashed var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    transition: border-color var(--t-fast, 0.15s), background var(--t-fast, 0.15s);
+    &.is-drag { border-color: var(--secondary); background: var(--secondary-soft); }
+    &.is-erro { border-color: var(--danger, #dc2626); }
+  }
+  &__preview {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 132px;
+    height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    background:
+      repeating-conic-gradient(rgb(15 37 87 / 0.06) 0% 25%, transparent 0% 50%) 50% / 14px 14px,
+      var(--bg, #fff);
+    border: 1px solid var(--line);
+    img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    i { font-size: 1.6rem; color: var(--muted); }
+  }
+  &--quadrado &__preview { width: 64px; }
+  &__acoes { display: grid; gap: 0.35rem; min-width: 0; }
+  &__link {
+    border: 0;
+    background: none;
+    padding: 0;
+    width: fit-content;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 650;
+    color: var(--secondary);
+    cursor: pointer;
+    &:hover { text-decoration: underline; }
+  }
+  @media (max-width: 479.98px) {
+    &__area { flex-direction: column; align-items: flex-start; }
+  }
+}

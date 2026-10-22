@@ -5,6 +5,7 @@ import { publicoApi } from '@/api/endpoints/publico';
 import type { Aparencia, CamposPersonalizados, Configuracoes as Cfg, ConfiguracoesPayload, DefinicaoCampo, Endereco, Segmento, TipoCampo } from '@/api/types';
 import { useSession } from '@/auth/SessionProvider';
 import { AlterarSenhaForm } from '@/components/AlterarSenhaModal';
+import { ImagemUpload } from '@/components/ImagemUpload';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ErrorState, PageLoader } from '@/components/ui/Feedback';
@@ -16,9 +17,14 @@ import { Segmented, Tabs } from '@/components/ui/Tabs';
 import { tratarErro } from '@/lib/errors';
 import { FUSOS, iconeModulo, SEGMENTOS_ICONE, UFS } from '@/lib/labels';
 import { maskCep, maskDocumento, maskTelefone } from '@/lib/masks';
+import { ehImagemEnviada } from '@/lib/imagem';
 import { brl } from '@/lib/money';
 import { toast } from '@/lib/notify';
 import { applyTheme, coresEfetivas, MARCA } from '@/theme/applyTheme';
+
+/** Mesmos limites da API (caracteres do data URL). */
+const LIMITE_LOGO = 350_000;
+const LIMITE_FAVICON = 60_000;
 
 type Aba = 'dados' | 'aparencia' | 'campos' | 'plano' | 'conta';
 
@@ -192,8 +198,9 @@ function AparenciaTab({ cfg }: { cfg: Cfg }) {
   const enviar = (ev: React.FormEvent) => {
     ev.preventDefault();
     const e: Record<string, string> = {};
-    if (a.logoUrl && !/^https:\/\/.+/i.test(a.logoUrl)) e.logo = 'Use um endereço https://';
-    if (a.faviconUrl && !/^https:\/\/.+/i.test(a.faviconUrl)) e.favicon = 'Use um endereço https://';
+    const imagemValida = (v: string) => /^https:\/\/.+/i.test(v) || ehImagemEnviada(v);
+    if (a.logoUrl && !imagemValida(a.logoUrl)) e.logo = 'Envie uma imagem ou use um link https://';
+    if (a.faviconUrl && !imagemValida(a.faviconUrl)) e.favicon = 'Envie uma imagem ou use um link https://';
     setErros(e);
     if (Object.keys(e).length) return;
     salvar.mutate({ aparencia: { corPrimaria: a.corPrimaria, corSecundaria: a.corSecundaria, tema: a.tema as 'claro' | 'escuro', logoUrl: a.logoUrl || null, faviconUrl: a.faviconUrl || null } });
@@ -234,9 +241,29 @@ function AparenciaTab({ cfg }: { cfg: Cfg }) {
             ]}
           />
         </div>
-        <div className="form-grid">
-          <Input label="URL da logo" type="url" placeholder="https://..." value={a.logoUrl} onChange={(e) => setA({ ...a, logoUrl: e.target.value })} error={erros.logo} hint="PNG ou SVG em https. Aparece no menu e no PDF." />
-          <Input label="URL do favicon" type="url" placeholder="https://..." value={a.faviconUrl} onChange={(e) => setA({ ...a, faviconUrl: e.target.value })} error={erros.favicon} />
+        <div className="form-grid upload-grid">
+          <ImagemUpload
+            label="Logo"
+            formato="largo"
+            maxLargura={600}
+            maxAltura={240}
+            limite={LIMITE_LOGO}
+            valor={a.logoUrl}
+            onChange={(v) => setA({ ...a, logoUrl: v })}
+            error={erros.logo}
+            hint="Aparece no menu e no PDF dos orçamentos. Prefira fundo transparente."
+          />
+          <ImagemUpload
+            label="Favicon"
+            formato="quadrado"
+            maxLargura={128}
+            maxAltura={128}
+            limite={LIMITE_FAVICON}
+            valor={a.faviconUrl}
+            onChange={(v) => setA({ ...a, faviconUrl: v })}
+            error={erros.favicon}
+            hint="Ícone da aba do navegador. Use uma imagem quadrada."
+          />
         </div>
         <div className="row">
           <Button type="submit" icon="bx-check" loading={salvar.isPending}>

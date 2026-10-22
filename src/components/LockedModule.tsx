@@ -8,7 +8,7 @@ const SUPORTE = import.meta.env.VITE_SUPORTE_WHATSAPP as string | undefined;
 /** Upsell de módulo não contratado. */
 export function LockedModule({ modulo, compacto }: { modulo: Modulo; compacto?: boolean }) {
   const m = MODULOS[modulo];
-  const link = linkWhatsapp(SUPORTE, `Olá! Quero contratar o módulo ${m.label} no Atendo.`);
+  const link = linkWhatsapp(SUPORTE, `Olá! Quero contratar o módulo ${m.label} no Simbora Gerir.`);
   return (
     <div className={compacto ? 'locked locked--compact' : 'locked'}>
       <span className="locked__icon" aria-hidden="true">

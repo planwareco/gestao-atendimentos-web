@@ -1,19 +1,28 @@
-# Atendo
+# Simbora Gerir
 
-> Sistema SaaS de gestão de atendimentos para prestadores de serviço no Brasil (salões, barbearias, estética, pet shops, fisioterapia, consultorias).
+> Simbora Gerir é um sistema de agendamento e gestão online (SaaS) para prestadores de serviço no Brasil: salões de beleza, barbearias, clínicas de estética, pet shops, fisioterapia e consultorias.
+
+## Sobre o produto
+O Simbora Gerir organiza a rotina de quem vive de atender: agenda sem conflito de horário, cadastro de clientes com histórico, orçamentos em PDF e o resultado financeiro do mês, tudo em um só lugar. Funciona no navegador do computador e do celular, sem instalação. O nome anterior do produto era "Atendo".
 
 ## O que faz
-- Agenda por dia, semana e mês, com bloqueio de conflito de horário e sugestão de horários livres
-- Cadastro de clientes com histórico, total gasto, ticket médio e alerta de retorno
-- Orçamentos com numeração automática, PDF com a marca da empresa e conversão em agendamento
-- Financeiro: despesas por categoria, comissões por profissional e resultado do período
-- Equipe com papéis (proprietário, recepção, profissional)
-- Campos personalizados por segmento (ex.: nome do pet, convênio, evolução da sessão)
+- **Agenda**: visões de dia, semana, mês e lista; bloqueia conflito de horário, sugere horários livres e permite encaixe e remarcação arrastando.
+- **Clientes**: cadastro com histórico de atendimentos, total gasto, ticket médio, aniversários e alerta de retorno.
+- **Orçamentos**: numeração automática, PDF com a marca da empresa e conversão do orçamento em agendamento.
+- **Financeiro**: despesas por categoria, comissões por profissional e resultado do período.
+- **Equipe**: usuários com papéis (proprietário, recepção, profissional), cada profissional com a própria agenda.
+- **Personalização**: cores, tema claro ou escuro, logo enviada pela própria empresa e campos personalizados por segmento (ex.: nome do pet, convênio, evolução da sessão).
 
-## Plano
-- Plano Start com preço base mensal e módulos opcionais (Orçamentos, Financeiro, Multi-profissional)
-- Pagamento da adesão por Pix, cartão ou boleto
+## Plano e preços
+- Plano Start com preço base mensal; o Núcleo (agenda, clientes, serviços, histórico e dashboard) já vem incluso.
+- Módulos opcionais: Orçamentos, Financeiro e Multi-profissional. O cliente paga só pelo que usar.
+- Adesão paga por Pix, cartão de crédito ou boleto, processados pelo Mercado Pago.
 
-## Páginas
-- [Página inicial e preços](https://SEU-DOMINIO/)
-- [Criar conta](https://SEU-DOMINIO/cadastro)
+## Para quem é
+Pequenos e médios negócios de serviço com agenda: salões de beleza, barbearias, studios de unha, clínicas de estética, pet shops, fisioterapeutas, personal trainers e consultorias.
+
+## Links importantes
+- [Página inicial](%SITE_URL%/): visão geral, recursos e perguntas frequentes
+- [Preços](%SITE_URL%/#precos): configurador do plano Start com os módulos
+- [Criar conta](%SITE_URL%/cadastro): cadastro da empresa e pagamento da adesão
+- [Entrar](%SITE_URL%/login): acesso de quem já é cliente

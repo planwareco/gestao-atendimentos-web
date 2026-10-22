@@ -1,3 +1,13 @@
+/*
+ * SEO · Simbora Gerir (palavras-chave usadas no index.html, na landing e no llms.txt)
+ * Principal:   sistema de agendamento para prestadores de serviço
+ * Secundárias: software para salão de beleza · sistema para barbearia · sistema para pet shop ·
+ *              agenda online para clínica de estética · controle financeiro para prestador de serviço
+ * Cauda longa: como organizar a agenda do salão sem conflito de horário ·
+ *              sistema de agendamento com orçamento em PDF · quanto custa um sistema de agendamento para salão ·
+ *              agenda online para fisioterapeuta com histórico do paciente ·
+ *              sistema para pet shop com cadastro do pet e alerta de retorno
+ */
 import { lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import AOS from 'aos';

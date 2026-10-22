@@ -18,7 +18,7 @@ import { plural } from '@/lib/rotulos';
    ──────────────────────────────────────────────────────────── */
 
 export default function Landing() {
-  useTitulo('Agenda, clientes e financeiro para prestadores de serviço');
+  useTitulo('Sistema de agendamento para serviços');
   return (
     <div className="landing">
       <Hero />
@@ -42,7 +42,7 @@ function Hero() {
       <div className="hero__grid container">
         <div className="hero__copy">
           <h1 id="hero-titulo" className="h-display" data-aos="fade-up">
-            A agenda que coloca o seu <em>negócio</em> em ordem.
+            O sistema de agendamento que coloca o seu <em>negócio</em> em ordem.
           </h1>
           <p className="hero__sub" data-aos="fade-up" data-aos-delay="80">
             Horários sem conflito, histórico de cada cliente, orçamentos com a sua marca e o resultado do mês em um só lugar.
@@ -530,7 +530,7 @@ function Duvidas() {
     { p: 'Quais formas de pagamento posso usar na adesão?', r: 'Pix, cartão de crédito e boleto, processados pelo Mercado Pago. No Pix a confirmação costuma sair na hora.' },
     { p: 'Funciona no celular?', r: 'Sim. O sistema se adapta a qualquer tela; no celular a agenda vira uma lista do dia.' },
     { p: 'Posso usar com a minha equipe?', r: 'Com o módulo Multi-profissional você cria usuários de recepção e de profissionais, cada um com a própria agenda e comissão.' },
-    { p: 'Posso personalizar as cores e a logo?', r: 'Sim. Em Configurações você define as cores, o tema claro ou escuro e a logo, e o sistema inteiro se ajusta.' },
+    { p: 'Posso personalizar as cores e a logo?', r: 'Sim. Em Configurações você define as cores, o tema claro ou escuro e envia a logo, e o sistema inteiro se ajusta.' },
   ];
   const [aberto, setAberto] = useState<number>(0);
   return (

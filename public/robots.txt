@@ -1,17 +1,29 @@
+# Simbora Gerir: sistema de agendamento para prestadores de serviço
 User-agent: *
 Allow: /
 Disallow: /app
 Disallow: /admin
 Disallow: /checkout
 Disallow: /pendente
+Disallow: /conta-desativada
 
+# IAs generativas podem ler as páginas públicas
 User-agent: GPTBot
 Allow: /
+Disallow: /app
+Disallow: /admin
+
 User-agent: ClaudeBot
 Allow: /
+Disallow: /app
+Disallow: /admin
+
 User-agent: PerplexityBot
 Allow: /
+Disallow: /app
+Disallow: /admin
+
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://SEU-DOMINIO/sitemap.xml
+Sitemap: %SITE_URL%/sitemap.xml

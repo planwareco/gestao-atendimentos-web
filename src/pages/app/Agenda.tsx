@@ -114,7 +114,7 @@ export default function Agenda() {
   const mover = useMutation({
     mutationFn: (p: { id: string; inicio: string; fim?: string; encaixe?: boolean }) => atendimentosApi.atualizar(p.id, { inicio: p.inicio, ...(p.fim ? { fim: p.fim } : {}), ...(p.encaixe ? { encaixe: true } : {}) }),
     onSuccess: () => {
-      invalidar();
+      void invalidar();
       setRemarcar(null);
       toast.ok(`${r.atendimento} remarcado.`);
     },
@@ -268,7 +268,19 @@ export default function Agenda() {
         />
       </div>
 
-      <AtendimentoFormModal aberto={form.aberto} atendimento={form.atendimento} inicial={form.inicial} onFechar={() => setForm({ aberto: false })} />
+      <AtendimentoFormModal
+        aberto={form.aberto}
+        atendimento={form.atendimento}
+        inicial={form.inicial}
+        onFechar={() => setForm({ aberto: false })}
+        onSalvo={(a) => {
+          // Leva a agenda até o dia do atendimento salvo e força a busca do período na tela
+          const cal = api();
+          const dia = new Date(a.inicio);
+          if (cal && (dia < cal.view.activeStart || dia >= cal.view.activeEnd)) cal.gotoDate(dia);
+          else void agenda.refetch();
+        }}
+      />
       <AtendimentoDetalheModal
         id={detalhe}
         onFechar={() => setDetalhe(null)}

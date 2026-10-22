@@ -8,6 +8,9 @@
   padding-inline: clamp(16px, 4vw, 32px);
 }
 
+.hide-sm {
+  @media (max-width: 767.98px) { display: none !important; }
+}
 .hide-xs {
   @media (max-width: 479.98px) { display: none !important; }
 }
@@ -430,6 +433,13 @@
     font-size: 0.88rem;
     &:hover { background: rgb(15 37 87 / 0.06); }
   }
+  &__gestor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--muted, inherit);
+    i { font-size: 1.05rem; }
+  }
   &__burger {
     @include reset-button;
     @include focus-ring(2px);
@@ -473,13 +483,16 @@
   font-size: 1.15rem;
   letter-spacing: -0.03em;
   color: var(--navy-800);
+  white-space: nowrap;
   &__mark { flex: none; color: var(--navy-800); }
-  &__glyph { fill: #fff; }
-  &__dot { fill: var(--secondary); }
+  &__glyph { stroke: #fff; }
+  &__dot { stroke: var(--secondary); }
+  &__accent { color: var(--secondary); }
   &--light {
     color: #fff;
     .logo__mark { color: #fff; }
-    .logo__glyph { fill: var(--sidebar-bg); }
+    .logo__glyph { stroke: var(--sidebar-bg); }
+    .logo__accent { color: inherit; opacity: 0.78; }
   }
 }
 

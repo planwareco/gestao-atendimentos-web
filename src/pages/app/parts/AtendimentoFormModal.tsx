@@ -53,9 +53,9 @@ export interface InicialAtendimento {
 /** Invalida tudo que depende de atendimentos. */
 export function useInvalidarAtendimentos() {
   const qc = useQueryClient();
-  return () => {
-    ['atendimentos', 'agenda', 'dashboard', 'clientes', 'financeiro'].forEach((k) => qc.invalidateQueries({ queryKey: [k] }));
-  };
+  // Marca tudo como desatualizado e já busca de novo o que está na tela (inclusive a agenda).
+  return () =>
+    Promise.all(['atendimentos', 'agenda', 'dashboard', 'clientes', 'financeiro'].map((k) => qc.invalidateQueries({ queryKey: [k], refetchType: 'active' })));
 }
 
 /** Criar/editar atendimento com N serviços, horários livres e tratamento de conflito de agenda. */
@@ -168,7 +168,7 @@ export function AtendimentoFormModal({
   const salvar = useMutation({
     mutationFn: (p: { body: AtendimentoPayload }) => (atendimento ? atendimentosApi.atualizar(atendimento.id, p.body) : atendimentosApi.criar(p.body)),
     onSuccess: (a) => {
-      invalidar();
+      void invalidar();
       toast.ok(editando ? `${r.atendimento} atualizado.` : `${r.atendimento} marcado para ${fmtData(isoParaLocal(a.inicio, tz).data)} às ${fmtHora(a.inicio, tz)}.`);
       onSalvo?.(a);
       onFechar();
@@ -186,7 +186,7 @@ export function AtendimentoFormModal({
             setErrosExtras(m);
           },
           DESCONTO_INVALIDO: (b) => setErros((x) => ({ ...x, descontoCentavos: b.message })),
-          TRANSICAO_INVALIDA: () => invalidar(),
+          TRANSICAO_INVALIDA: () => void invalidar(),
         },
       });
     },

@@ -3,40 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Atendo · Agenda, clientes e financeiro para prestadores de serviço</title>
-    <meta name="description" content="Sistema de gestão de atendimentos para salões, barbearias, pet shops, clínicas de estética, fisioterapia e consultorias. Agenda sem conflitos, histórico de clientes, orçamentos em PDF e financeiro." />
-    <meta name="keywords" content="sistema de agendamento, gestão de atendimentos, agenda online, software para salão, sistema para pet shop, sistema para barbearia, sistema para fisioterapia, controle financeiro, orçamento em PDF" />
+    <title>Sistema de Agendamento para Serviços | Simbora Gerir</title>
+    <meta name="description" content="Agenda sem conflito, clientes com histórico, orçamentos em PDF e financeiro para salões, barbearias, pet shops e clínicas. Comece no plano Start." />
+    <meta name="keywords" content="sistema de agendamento para prestadores de serviço, software para salão de beleza, sistema para barbearia, sistema para pet shop, agenda online para clínica de estética, sistema para fisioterapia, controle financeiro para prestador de serviço, orçamento em PDF, agenda sem conflito de horário" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Simbora Gerir" />
+    <meta name="application-name" content="Simbora Gerir" />
     <meta name="theme-color" content="#0F2557" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="%VITE_SITE_URL%/" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="google-site-verification" content="%GOOGLE_SITE_VERIFICATION%" />
+    <link rel="canonical" href="%SITE_URL%/" />
 
+    <!-- Favicons e PWA -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Simbora Gerir" />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:site_name" content="Atendo" />
-    <meta property="og:title" content="Atendo · A agenda que organiza o seu negócio de serviços" />
+    <meta property="og:site_name" content="Simbora Gerir" />
+    <meta property="og:title" content="Simbora Gerir: o sistema de agendamento que organiza o seu negócio" />
     <meta property="og:description" content="Agenda, clientes, orçamentos e financeiro em um só lugar. Comece no plano Start e adicione só os módulos que usar." />
-    <meta property="og:url" content="%VITE_SITE_URL%/" />
-    <meta property="og:image" content="%VITE_SITE_URL%/og-image.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Atendo · Gestão de atendimentos" />
-    <meta name="twitter:description" content="Agenda, clientes, orçamentos e financeiro em um só lugar." />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo do Simbora Gerir com o resumo: agenda, clientes, orçamentos e financeiro para prestadores de serviço" />
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Simbora Gerir · Sistema de agendamento e gestão" />
+    <meta name="twitter:description" content="Agenda sem conflito, clientes, orçamentos em PDF e financeiro em um só lugar." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
+
+    <!-- Dados estruturados: produto, organização, site e FAQ (texto idêntico ao da página) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Atendo",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "inLanguage": "pt-BR",
-        "description": "Sistema SaaS de gestão de atendimentos para prestadores de serviço: agenda com detecção de conflitos, clientes com histórico, orçamentos em PDF, despesas, comissões e resultado financeiro.",
-        "offers": { "@type": "Offer", "priceCurrency": "BRL", "category": "subscription", "name": "Plano Start" }
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "%SITE_URL%/#organizacao",
+            "name": "Simbora Gerir",
+            "url": "%SITE_URL%/",
+            "logo": "%SITE_URL%/logo.png",
+            "image": "%SITE_URL%/og-image.png",
+            "areaServed": "BR",
+            "sameAs": ["[URL_INSTAGRAM]"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "%SITE_URL%/#site",
+            "name": "Simbora Gerir",
+            "url": "%SITE_URL%/",
+            "inLanguage": "pt-BR",
+            "publisher": { "@id": "%SITE_URL%/#organizacao" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "%SITE_URL%/#software",
+            "name": "Simbora Gerir",
+            "url": "%SITE_URL%/",
+            "image": "%SITE_URL%/og-image.png",
+            "applicationCategory": "BusinessApplication",
+            "applicationSubCategory": "Sistema de agendamento e gestão de atendimentos",
+            "operatingSystem": "Web, Android, iOS (navegador)",
+            "inLanguage": "pt-BR",
+            "description": "Sistema de agendamento e gestão para prestadores de serviço: agenda com detecção de conflitos, clientes com histórico, orçamentos em PDF, despesas, comissões e resultado financeiro.",
+            "featureList": [
+              "Agenda por dia, semana e mês com bloqueio de conflito de horário",
+              "Cadastro de clientes com histórico e alerta de retorno",
+              "Orçamentos com PDF na marca da empresa",
+              "Despesas, comissões e resultado do mês",
+              "Equipe com permissões por papel",
+              "Campos personalizados por segmento"
+            ],
+            "audience": { "@type": "BusinessAudience", "audienceType": "Salões de beleza, barbearias, pet shops, clínicas de estética, fisioterapia e consultorias" },
+            "offers": { "@type": "Offer", "name": "Plano Start", "priceCurrency": "BRL", "category": "subscription", "url": "%SITE_URL%/#precos" },
+            "publisher": { "@id": "%SITE_URL%/#organizacao" }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "%SITE_URL%/#duvidas",
+            "mainEntity": [
+              { "@type": "Question", "name": "Preciso contratar todos os módulos?", "acceptedAnswer": { "@type": "Answer", "text": "Não. O Núcleo já vem no plano Start com agenda, clientes, serviços, histórico e dashboard. Orçamentos, Financeiro e Multi-profissional são opcionais." } },
+              { "@type": "Question", "name": "Quais formas de pagamento posso usar na adesão?", "acceptedAnswer": { "@type": "Answer", "text": "Pix, cartão de crédito e boleto, processados pelo Mercado Pago. No Pix a confirmação costuma sair na hora." } },
+              { "@type": "Question", "name": "Funciona no celular?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. O sistema se adapta a qualquer tela; no celular a agenda vira uma lista do dia." } },
+              { "@type": "Question", "name": "Posso usar com a minha equipe?", "acceptedAnswer": { "@type": "Answer", "text": "Com o módulo Multi-profissional você cria usuários de recepção e de profissionais, cada um com a própria agenda e comissão." } },
+              { "@type": "Question", "name": "Posso personalizar as cores e a logo?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. Em Configurações você define as cores, o tema claro ou escuro e envia a logo, e o sistema inteiro se ajusta." } }
+            ]
+          }
+        ]
       }
     </script>
   </head>
   <body>
-    <noscript>O Atendo precisa de JavaScript habilitado para funcionar.</noscript>
+    <noscript>
+      <h1>Simbora Gerir: sistema de agendamento para prestadores de serviço</h1>
+      <p>Agenda sem conflito de horário, clientes com histórico, orçamentos em PDF e financeiro para salões de beleza, barbearias, pet shops, clínicas de estética, fisioterapia e consultorias. Ative o JavaScript para usar o sistema.</p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

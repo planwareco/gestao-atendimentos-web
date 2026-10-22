@@ -53,7 +53,7 @@ export function useMedia(query: string): boolean {
 export function useTitulo(titulo: string) {
   useEffect(() => {
     const anterior = document.title;
-    document.title = `${titulo} · Atendo`;
+    document.title = `${titulo} · Simbora Gerir`;
     return () => {
       document.title = anterior;
     };
