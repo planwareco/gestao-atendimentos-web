@@ -1,5 +1,4 @@
 import { useId, useRef, useState } from 'react';
-import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Field';
 import { cn } from '@/lib/cn';
 import { ehImagemEnviada, prepararImagem, TIPOS_IMAGEM, type OpcoesImagem } from '@/lib/imagem';
@@ -10,13 +9,18 @@ interface Props extends OpcoesImagem {
   valor: string;
   onChange: (v: string) => void;
   error?: string;
-  /** Formato da área de pré-visualização. */
-  formato?: 'largo' | 'quadrado';
+  /** `largo` para logo; `icone` para favicon (mostra como aba do navegador). */
+  formato?: 'largo' | 'icone';
 }
 
+const tamanho = (dataUrl: string) => {
+  const kb = Math.round(((dataUrl.length - dataUrl.indexOf(',') - 1) * 3) / 4 / 1024);
+  return `${Math.max(1, kb)} KB`;
+};
+
 /**
- * Logo/favicon: envio de arquivo (com redimensionamento no navegador) ou link https.
- * Aceita arrastar e soltar. O valor é sempre uma string: data URL ou https://.
+ * Logo/favicon: a pré-visualização é a própria área de envio (clique ou arraste).
+ * Redimensiona no navegador; o valor é sempre string (data URL ou https://).
  */
 export function ImagemUpload({ label, hint, valor, onChange, error, formato = 'largo', ...opcoes }: Props) {
   const id = useId();
@@ -41,67 +45,105 @@ export function ImagemUpload({ label, hint, valor, onChange, error, formato = 'l
     }
   };
 
-  const mensagemErro = erroLocal ?? error;
+  const abrir = () => input.current?.click();
+  const erro = erroLocal ?? error;
+  const enviada = ehImagemEnviada(valor);
 
   return (
-    <div className={cn('upload-img', `upload-img--${formato}`)}>
-      <span className="field__label" id={`${id}-label`}>
+    <div className={cn('upimg', `upimg--${formato}`, erro && 'upimg--erro')}>
+      <span className="field__label" id={`${id}-l`}>
         {label}
       </span>
-      <div
-        className={cn('upload-img__area', arrastando && 'is-drag', mensagemErro && 'is-erro')}
-        onDragOver={(e) => {
-          e.preventDefault();
-          setArrastando(true);
-        }}
-        onDragLeave={() => setArrastando(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setArrastando(false);
-          void receber(e.dataTransfer.files?.[0]);
-        }}
-      >
-        <div className="upload-img__preview" aria-hidden={!valor}>
-          {valor ? <img src={valor} alt={`Pré-visualização: ${label}`} /> : <i className="bx bx-image-add" aria-hidden="true" />}
-        </div>
-        <div className="upload-img__acoes">
-          <div className="row" style={{ ['--gap' as string]: '0.5rem' }}>
-            <Button size="sm" variant="soft" icon="bx-upload" loading={processando} onClick={() => input.current?.click()} aria-describedby={`${id}-label`}>
-              {valor ? 'Trocar imagem' : 'Enviar imagem'}
-            </Button>
-            {valor && (
-              <Button
-                size="sm"
-                variant="danger-ghost"
-                icon="bx-trash"
-                onClick={() => {
-                  onChange('');
-                  setErroLocal(null);
-                }}
-              >
-                Remover
-              </Button>
+
+      <div className="upimg__box">
+        <button
+          type="button"
+          className={cn('upimg__drop', arrastando && 'is-drag', !valor && 'is-vazio')}
+          onClick={abrir}
+          aria-labelledby={`${id}-l`}
+          aria-describedby={`${id}-d`}
+          aria-busy={processando || undefined}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setArrastando(true);
+          }}
+          onDragLeave={() => setArrastando(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setArrastando(false);
+            void receber(e.dataTransfer.files?.[0]);
+          }}
+        >
+          {processando ? (
+            <span className="spinner" aria-label="Processando imagem" />
+          ) : valor ? (
+            formato === 'icone' ? (
+              <span className="upimg__aba" aria-hidden="true">
+                <img src={valor} alt="" />
+                <span>Seu sistema</span>
+                <i className="bx bx-x" />
+              </span>
+            ) : (
+              <img src={valor} alt={`${label} atual`} className="upimg__img" />
+            )
+          ) : (
+            <span className="upimg__vazio">
+              <i className="bx bx-cloud-upload" aria-hidden="true" />
+              <strong>Clique ou arraste</strong>
+              <small>PNG, JPG, WebP ou SVG</small>
+            </span>
+          )}
+          {valor && !processando && (
+            <span className="upimg__trocar" aria-hidden="true">
+              <i className="bx bx-refresh" /> Trocar
+            </span>
+          )}
+        </button>
+
+        <div className="upimg__barra">
+          <span className="upimg__meta" id={`${id}-d`}>
+            {valor ? (
+              <>
+                <i className={cn('bx', enviada ? 'bx-check-circle' : 'bx-link')} aria-hidden="true" />
+                {enviada ? `Imagem enviada · ${tamanho(valor)}` : 'Usando link externo'}
+              </>
+            ) : (
+              'Nenhuma imagem'
             )}
-          </div>
-          <span className="text-xs muted">PNG, JPG, WebP ou SVG, até 5 MB. Você também pode arrastar o arquivo para cá.</span>
-          <button type="button" className="upload-img__link" onClick={() => setModoLink((v) => !v)} aria-expanded={modoLink}>
-            {modoLink ? 'Fechar link' : 'Prefiro colar um link'}
+          </span>
+          <button type="button" className="upimg__acao" onClick={() => setModoLink((v) => !v)} aria-expanded={modoLink}>
+            <i className="bx bx-link" aria-hidden="true" /> Link
           </button>
+          {valor && (
+            <button
+              type="button"
+              className="upimg__acao upimg__acao--perigo"
+              onClick={() => {
+                onChange('');
+                setErroLocal(null);
+              }}
+              aria-label={`Remover ${label.toLowerCase()}`}
+            >
+              <i className="bx bx-trash" aria-hidden="true" />
+            </button>
+          )}
         </div>
         <input ref={input} type="file" accept={TIPOS_IMAGEM.join(',')} hidden onChange={(e) => void receber(e.target.files?.[0])} />
       </div>
+
       {modoLink && (
         <Input
-          label={`Link da imagem (${label.toLowerCase()})`}
+          label="Link da imagem"
           type="url"
           placeholder="https://..."
-          value={ehImagemEnviada(valor) ? '' : valor}
+          value={enviada ? '' : valor}
           onChange={(e) => onChange(e.target.value)}
+          fieldClassName="upimg__link"
         />
       )}
-      {mensagemErro ? (
+      {erro ? (
         <span className="field__error" role="alert">
-          {mensagemErro}
+          {erro}
         </span>
       ) : (
         hint && <span className="field__hint">{hint}</span>

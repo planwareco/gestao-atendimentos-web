@@ -155,11 +155,12 @@ export default function Dashboard() {
                   )}
                 </div>
               </div>
-              <div className="card__body chart-box">
+              <div className="card__body card__body--fill">
                 {carregando ? (
                   <Skeleton h={260} r={14} />
                 ) : (
-                  <ResponsiveContainer width="100%" height={260}>
+                  <div className="chart-fill chart-fill--lg">
+                  <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={serieMensal} barGap={4} margin={{ left: 0, right: 8, top: 8 }}>
                       <CartesianGrid vertical={false} stroke={cores.linha} strokeDasharray="4 4" />
                       <XAxis dataKey="mes" tickLine={false} axisLine={false} tick={{ fill: cores.texto, fontSize: 12 }} />
@@ -169,6 +170,7 @@ export default function Dashboard() {
                       {d?.financeiroDisponivel && <Bar dataKey="Saídas" fill={cores.primaria} radius={[6, 6, 0, 0]} maxBarSize={26} animationDuration={900} />}
                     </BarChart>
                   </ResponsiveContainer>
+                  </div>
                 )}
               </div>
             </section>
@@ -217,11 +219,12 @@ export default function Dashboard() {
                   <i className="bx bx-trending-up" aria-hidden="true" /> Faturamento acumulado
                 </h2>
               </div>
-              <div className="card__body chart-box">
+              <div className="card__body card__body--fill">
                 {carregando ? (
                   <Skeleton h={220} r={14} />
                 ) : (
-                  <ResponsiveContainer width="100%" height={220}>
+                  <div className="chart-fill">
+                  <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={serieAcumulada} margin={{ left: 0, right: 8, top: 8 }}>
                       <defs>
                         <linearGradient id="gAcum" x1="0" y1="0" x2="0" y2="1">
@@ -236,6 +239,7 @@ export default function Dashboard() {
                       <Area type="monotone" dataKey="Acumulado" stroke={cores.secundaria} strokeWidth={2.5} fill="url(#gAcum)" animationDuration={1100} />
                     </AreaChart>
                   </ResponsiveContainer>
+                  </div>
                 )}
               </div>
             </section>
@@ -246,7 +250,7 @@ export default function Dashboard() {
                   <i className="bx bx-purchase-tag-alt" aria-hidden="true" /> Receita por {r.servico.toLowerCase()}
                 </h2>
               </div>
-              <div className="card__body">
+              <div className="card__body card__body--fill">
                 {carregando ? (
                   <Skeleton h={220} r={14} />
                 ) : porServico.length ? (
@@ -277,7 +281,7 @@ export default function Dashboard() {
                   <i className="bx bx-pie-chart-alt-2" aria-hidden="true" /> Despesas por categoria
                 </h2>
               </div>
-              <div className="card__body">
+              <div className="card__body card__body--fill">
                 {!d?.financeiroDisponivel && !carregando ? (
                   ehProprietario ? <LockedModule modulo="FINANCEIRO" compacto /> : <EmptyState icon="bx-lock-alt" titulo="Indisponível" />
                 ) : carregando ? (
@@ -285,9 +289,9 @@ export default function Dashboard() {
                 ) : porCategoria.length ? (
                   <div className="donut">
                     <div className="donut__chart">
-                      <ResponsiveContainer width="100%" height={190}>
+                      <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
-                          <Pie data={porCategoria} dataKey="totalCentavos" nameKey="nome" innerRadius={58} outerRadius={86} paddingAngle={2} stroke="none" animationDuration={900}>
+                          <Pie data={porCategoria} dataKey="totalCentavos" nameKey="nome" innerRadius="66%" outerRadius="96%" paddingAngle={2} stroke="none" animationDuration={900}>
                             {porCategoria.map((c, i) => (
                               <Cell key={c.categoriaId} fill={c.cor ?? PALETA_CATEGORIAS[i % PALETA_CATEGORIAS.length]} />
                             ))}
@@ -304,7 +308,7 @@ export default function Dashboard() {
                       {porCategoria.slice(0, 6).map((c, i) => (
                         <li key={c.categoriaId}>
                           <i style={{ background: c.cor ?? PALETA_CATEGORIAS[i % PALETA_CATEGORIAS.length] }} />
-                          <span className="grow">{c.nome}</span>
+                          <span className="donut__nome" title={c.nome}>{c.nome}</span>
                           <span className="num">{Math.round((c.totalCentavos / (totalCategorias || 1)) * 100)}%</span>
                         </li>
                       ))}

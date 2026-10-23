@@ -255,7 +255,7 @@ function AparenciaTab({ cfg }: { cfg: Cfg }) {
           />
           <ImagemUpload
             label="Favicon"
-            formato="quadrado"
+            formato="icone"
             maxLargura={128}
             maxAltura={128}
             limite={LIMITE_FAVICON}

@@ -50,6 +50,27 @@ export interface InicialAtendimento {
   profissionalId?: string;
 }
 
+/**
+ * Coloca o atendimento salvo direto nas agendas já carregadas (sem esperar a rede),
+ * respeitando o período e o filtro de profissional de cada uma.
+ */
+export function useGravarNaAgenda() {
+  const qc = useQueryClient();
+  return (a: Atendimento) => {
+    for (const [key, data] of qc.getQueriesData<unknown>({ queryKey: ['agenda'] })) {
+      if (!Array.isArray(data)) continue; // ignora ['agenda', 'livres', ...]
+      const [, inicio, fim, profissionalId, cancelados] = key as [string, string?, string?, string?, boolean?];
+      const lista = data as Atendimento[];
+      const semEle = lista.filter((x) => x.id !== a.id);
+      const noPeriodo = (!inicio || new Date(a.fim) > new Date(inicio)) && (!fim || new Date(a.inicio) < new Date(fim));
+      const doFiltro = !profissionalId || a.profissional?.id === profissionalId;
+      const visivel = noPeriodo && doFiltro && (a.status !== 'CANCELADO' || Boolean(cancelados));
+      const nova = visivel ? [...semEle, a].sort((x, y) => x.inicio.localeCompare(y.inicio)) : semEle;
+      qc.setQueryData(key, nova);
+    }
+  };
+}
+
 /** Invalida tudo que depende de atendimentos. */
 export function useInvalidarAtendimentos() {
   const qc = useQueryClient();
@@ -76,6 +97,7 @@ export function AtendimentoFormModal({
   const { sessao } = useSession();
   const { pode, temModulo } = usePermissao();
   const invalidar = useInvalidarAtendimentos();
+  const gravarNaAgenda = useGravarNaAgenda();
   const tz = sessao?.empresa.fusoHorario ?? 'America/Sao_Paulo';
   const defsExtras = sessao?.empresa.camposPersonalizados?.atendimento;
   const escolheProfissional = temModulo('MULTI_PROFISSIONAL') && pode('atendimentos:todos');
@@ -168,6 +190,7 @@ export function AtendimentoFormModal({
   const salvar = useMutation({
     mutationFn: (p: { body: AtendimentoPayload }) => (atendimento ? atendimentosApi.atualizar(atendimento.id, p.body) : atendimentosApi.criar(p.body)),
     onSuccess: (a) => {
+      gravarNaAgenda(a);
       void invalidar();
       toast.ok(editando ? `${r.atendimento} atualizado.` : `${r.atendimento} marcado para ${fmtData(isoParaLocal(a.inicio, tz).data)} às ${fmtHora(a.inicio, tz)}.`);
       onSalvo?.(a);
