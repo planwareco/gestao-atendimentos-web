@@ -136,7 +136,17 @@ export default function Agenda() {
   };
 
   const conteudo = (arg: EventContentArg) => {
-    const a = arg.event.extendedProps.a as Atendimento;
+    const a = arg.event.extendedProps.a as Atendimento | undefined;
+    // Prévia da seleção ("sombra" ao clicar/arrastar num horário) não é um atendimento:
+    // sem este retorno o render quebrava e o calendário parava de atualizar até o refresh.
+    if (!a || arg.isMirror) {
+      return (
+        <div className="ev ev--previa">
+          <span className="ev__hora num">{arg.timeText}</span>
+          <strong className="ev__cliente">{r.novo(r.atendimento)}</strong>
+        </div>
+      );
+    }
     const extra = resumoCamposExtras(defs, a.camposExtras, 1);
     if (arg.view.type.startsWith('list')) {
       return (
