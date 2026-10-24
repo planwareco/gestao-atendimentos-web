@@ -73,14 +73,14 @@ export default function Servicos() {
         descricao={`Preço e duração de cada ${r.servico.toLowerCase()} alimentam a agenda e os orçamentos.`}
         acoes={
           escrever && (
-            <Button icon="bx-plus" onClick={() => setForm({ aberto: true })}>
+            <Button icon="bx-plus" onClick={() => setForm({ aberto: true })} data-tour="servico-novo">
               {r.novo(r.servico)}
             </Button>
           )
         }
       />
 
-      <div className="toolbar" data-aos="fade-up">
+      <div className="toolbar" data-aos="fade-up" data-tour="servicos-filtros">
         <Input aria-label="Buscar" placeholder={`Buscar ${r.servicos.toLowerCase()}`} icon="bx-search" value={busca} onChange={(e) => (setBusca(e.target.value), setPage(1))} fieldClassName="toolbar__busca" />
         <Select aria-label="Categoria" value={categoria} onChange={(e) => (setCategoria(e.target.value), setPage(1))} fieldClassName="field--inline">
           <option value="">Todas as categorias</option>

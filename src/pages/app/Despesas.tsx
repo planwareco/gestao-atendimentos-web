@@ -33,6 +33,7 @@ export default function Despesas() {
     <div className="page">
       <PageHeader titulo="Despesas" descricao="Somente despesas pagas entram no resultado e no dashboard." />
       <Tabs<Aba>
+        tour="despesas-abas"
         label="Seções de despesas"
         valor={aba}
         onChange={setAba}
@@ -97,7 +98,7 @@ function Lancamentos() {
   return (
     <>
       <div className="toolbar" data-aos="fade-up">
-        <div className="mes-nav">
+        <div className="mes-nav" data-tour="despesas-mes">
           <Button variant="ghost" size="sm" iconOnly icon="bx-chevron-left" aria-label="Mês anterior" onClick={() => mudarMes(-1)} />
           <strong>
             {MESES[ref.mes - 1]} {ref.ano}
@@ -124,13 +125,13 @@ function Lancamentos() {
           ]}
         />
         {escrever && (
-          <Button icon="bx-plus" onClick={() => setForm({ aberto: true })} className="toolbar__cta">
+          <Button icon="bx-plus" onClick={() => setForm({ aberto: true })} className="toolbar__cta" data-tour="despesa-nova">
             Lançar despesa
           </Button>
         )}
       </div>
 
-      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60">
+      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60" data-tour="despesas-lista">
         {q.error ? (
           <ErrorState erro={q.error} onTentar={() => q.refetch()} />
         ) : q.isLoading ? (

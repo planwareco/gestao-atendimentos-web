@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { configuracoesApi } from '@/api/endpoints/configuracoes';
 import { publicoApi } from '@/api/endpoints/publico';
@@ -30,13 +31,29 @@ type Aba = 'dados' | 'aparencia' | 'campos' | 'plano' | 'conta';
 
 /** Configurações da empresa: dados, aparência com preview ao vivo, segmento e campos, plano e conta. */
 export default function Configuracoes() {
-  const [aba, setAba] = useState<Aba>('dados');
+  const [params, setParams] = useSearchParams();
+  const ABAS: Aba[] = ['dados', 'aparencia', 'campos', 'plano', 'conta'];
+  const daUrl = params.get('aba') as Aba | null;
+  const [aba, setAbaEstado] = useState<Aba>(daUrl && ABAS.includes(daUrl) ? daUrl : 'dados');
+  // A aba fica no endereço: dá para voltar direto a ela (o tour guiado usa isso)
+  useEffect(() => {
+    if (daUrl && ABAS.includes(daUrl) && daUrl !== aba) setAbaEstado(daUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [daUrl]);
+  const setAba = (a: Aba) => {
+    setAbaEstado(a);
+    const p = new URLSearchParams(params);
+    if (a === 'dados') p.delete('aba');
+    else p.set('aba', a);
+    setParams(p, { replace: true });
+  };
   const q = useQuery({ queryKey: ['configuracoes'], queryFn: configuracoesApi.obter });
 
   return (
     <div className="page">
       <PageHeader titulo="Configurações" descricao="Tudo o que muda aqui vale para toda a equipe." />
       <Tabs<Aba>
+        tour="config-abas"
         label="Seções"
         valor={aba}
         onChange={setAba}
@@ -207,7 +224,7 @@ function AparenciaTab({ cfg }: { cfg: Cfg }) {
   };
 
   return (
-    <form className="aparencia" onSubmit={enviar} noValidate data-aos="fade-up">
+    <form className="aparencia" onSubmit={enviar} noValidate data-aos="fade-up" data-tour="config-aparencia">
       <div className="card card--pad stack" style={{ ['--gap' as string]: '1.4rem' }}>
         <div className="field">
           <span className="field__label">Cor principal</span>
@@ -417,7 +434,7 @@ function Campos({ cfg }: { cfg: Cfg }) {
           ))}
         </div>
       </div>
-      <div className="form-section">
+      <div className="form-section" data-tour="config-rotulos">
         <span className="form-section__title">
           <i className="bx bx-text" aria-hidden="true" /> Como vocês chamam
         </span>

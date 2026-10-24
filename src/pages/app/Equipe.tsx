@@ -38,14 +38,14 @@ export default function Equipe() {
         descricao="Quem acessa o sistema e o que cada pessoa pode ver."
         acoes={
           escrever && (
-            <Button icon="bx-user-plus" onClick={() => setForm({ aberto: true })}>
+            <Button icon="bx-user-plus" onClick={() => setForm({ aberto: true })} data-tour="equipe-convidar">
               Convidar pessoa
             </Button>
           )
         }
       />
 
-      <div className="papeis" data-aos="fade-up">
+      <div className="papeis" data-aos="fade-up" data-tour="equipe-papeis">
         {(Object.keys(PAPEIS) as Papel[]).map((p) => (
           <div key={p} className="papeis__item">
             <i className={`bx ${PAPEIS[p].icone}`} aria-hidden="true" />

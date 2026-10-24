@@ -37,14 +37,14 @@ export default function Orcamentos() {
         descricao="Do rascunho ao agendamento: envie em PDF, aprove e converta em horário."
         acoes={
           podeEscrever('orcamentos:escrever') && (
-            <Button icon="bx-plus" onClick={() => navigate('/app/orcamentos/novo')}>
+            <Button icon="bx-plus" onClick={() => navigate('/app/orcamentos/novo')} data-tour="orcamento-novo">
               Novo orçamento
             </Button>
           )
         }
       />
 
-      <div className="filtros card card--pad" data-aos="fade-up">
+      <div className="filtros card card--pad" data-aos="fade-up" data-tour="orcamentos-filtros">
         <div className="filtros__grid">
           <ClientePicker valor={cliente} onChange={(c) => (setCliente(c), setPage(1))} label={`Filtrar ${r.cliente.toLowerCase()}`} />
           <Input label="Número" inputMode="numeric" placeholder="Ex.: 42" value={numero} onChange={(e) => (setNumero(e.target.value.replace(/\D/g, '')), setPage(1))} />
@@ -62,7 +62,7 @@ export default function Orcamentos() {
         </div>
       </div>
 
-      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60">
+      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60" data-tour="orcamentos-lista">
         {q.error ? (
           <ErrorState erro={q.error} onTentar={() => q.refetch()} />
         ) : q.isLoading ? (

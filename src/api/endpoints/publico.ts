@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { API_URL } from '../createClient';
-import { http } from '../http';
+import { http, usarDemoQuandoAtiva } from '../http';
 import type { CadastroPayload, CadastroResposta, Envelope, PlanoPublico, PrecoSimulado, SegmentoPublico } from '../types';
 
 const pub = axios.create({ baseURL: `${API_URL}/v1/public` });
+usarDemoQuandoAtiva(pub);
 
 export const publicoApi = {
   plano: () => pub.get<Envelope<PlanoPublico | null>>('/plano').then((r) => r.data.data),

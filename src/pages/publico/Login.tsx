@@ -88,6 +88,10 @@ export default function Login() {
           </Button>
           <p className="text-sm muted" style={{ textAlign: 'center' }}>
             Ainda não tem conta? <Link to="/cadastro" className="btn btn--link">Criar conta</Link>
+            <br />
+            <Link to="/demo" className="btn btn--link">
+              <i className="bx bx-play-circle" aria-hidden="true" /> Testar grátis com uma empresa de exemplo
+            </Link>
           </p>
         </form>
         <p className="auth__rodape text-xs subtle">Esqueceu a senha? Peça ao proprietário da conta para redefinir em Equipe.</p>

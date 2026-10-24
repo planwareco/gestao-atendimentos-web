@@ -28,6 +28,7 @@ const Login = lazy(() => import('@/pages/publico/Login'));
 const Pendente = lazy(() => import('@/pages/publico/Pendente'));
 const ContaDesativada = lazy(() => import('@/pages/publico/ContaDesativada'));
 const NaoEncontrada = lazy(() => import('@/pages/publico/NaoEncontrada'));
+const Demo = lazy(() => import('@/pages/publico/Demo'));
 
 const Dashboard = lazy(() => import('@/pages/app/Dashboard'));
 const Agenda = lazy(() => import('@/pages/app/Agenda'));
@@ -97,6 +98,7 @@ export function App() {
             </Route>
           </Route>
           <Route path="/login" element={<P><Login /></P>} />
+          <Route path="/demo" element={<P><Demo /></P>} />
 
           <Route element={<RequireAuth />}>
             <Route

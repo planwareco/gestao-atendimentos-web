@@ -285,9 +285,9 @@
   }
   .fc-daygrid-event { padding: 2px 4px; }
   .fc-event { --c: var(--secondary); }
-  .ev--confirmado { background: var(--action) !important; border-color: var(--secondary) !important; }
-  .ev--agendado:not(.ev--cor) { background: var(--secondary); border-color: var(--action); }
-  .ev--realizado { background: var(--success) !important; border-color: color-mix(in srgb, var(--success) 70%, #000) !important; opacity: 0.85; }
+  .ev--confirmado:not(.fc-list-event) { background: var(--action) !important; border-color: var(--secondary) !important; }
+  .ev--agendado:not(.ev--cor):not(.fc-list-event) { background: var(--secondary); border-color: var(--action); }
+  .ev--realizado:not(.fc-list-event) { background: var(--success) !important; border-color: color-mix(in srgb, var(--success) 70%, #000) !important; opacity: 0.85; }
   .ev--cancelado { background: var(--surface-2) !important; border-color: var(--line-strong) !important; color: var(--muted) !important; text-decoration: line-through; box-shadow: none; .ev, .ev * { color: var(--muted); } }
   .ev--encaixe { background-image: repeating-linear-gradient(135deg, rgb(255 255 255 / 0.14) 0 6px, transparent 6px 12px) !important; }
   .fc-list { border-radius: var(--r-md); }

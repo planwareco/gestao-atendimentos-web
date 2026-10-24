@@ -12,6 +12,10 @@ import { fmtDataLonga } from '@/lib/dates';
 import { useClickFora, useMedia } from '@/lib/hooks';
 import { PAPEIS } from '@/lib/labels';
 import { useRotulos } from '@/lib/rotulos';
+import { BoasVindas } from '@/tour/BoasVindas';
+import { CentralAjuda } from '@/tour/CentralAjuda';
+import { EVENTO_MENU, TourProvider, useTour } from '@/tour/TourProvider';
+import { DemoFaixa } from './DemoFaixa';
 
 interface ItemMenu {
   to: string;
@@ -38,9 +42,21 @@ const gravar = (k: string, v: string) => {
   }
 };
 
-/** Casca da área da empresa: sidebar marinho, topo com ações e banner de somente leitura. */
+/** Área da empresa com o tour guiado e a central de ajuda disponíveis em todas as telas. */
 export function AppLayout() {
-  const { sessao, logout } = useSession();
+  return (
+    <TourProvider>
+      <Casca />
+      <BoasVindas />
+      <CentralAjuda />
+    </TourProvider>
+  );
+}
+
+/** Casca da área da empresa: sidebar marinho, topo com ações e banner de somente leitura. */
+function Casca() {
+  const { sessao, logout, demo } = useSession();
+  const tour = useTour();
   const { pode, temModulo, ehProprietario, somenteLeitura, podeEscrever } = usePermissao();
   const r = useRotulos();
   const nav = useNavigate();
@@ -55,6 +71,12 @@ export function AppLayout() {
   useEffect(() => setAberta(false), [loc.pathname]);
   useEffect(() => {
     if (desktop) setAberta(false);
+  }, [desktop]);
+  // O tour abre o menu no celular quando o passo fala dele
+  useEffect(() => {
+    const h = (e: Event) => !desktop && setAberta(Boolean((e as CustomEvent<boolean>).detail));
+    window.addEventListener(EVENTO_MENU, h);
+    return () => window.removeEventListener(EVENTO_MENU, h);
   }, [desktop]);
 
   if (!sessao) return null;
@@ -117,7 +139,7 @@ export function AppLayout() {
           <span className="sidebar__company-role">{PAPEIS[usuario.papel].label}</span>
         </div>
 
-        <nav className="sidebar__nav">
+        <nav className="sidebar__nav" data-tour="menu">
           {grupos.map((g) => {
             const visiveis = g.itens.filter((i) => pode(i.p) || (ehProprietario && !temModulo(i.modulo)));
             if (!visiveis.length) return null;
@@ -168,6 +190,7 @@ export function AppLayout() {
       <div className="scrim" onClick={() => setAberta(false)} aria-hidden="true" />
 
       <div className="shell__main">
+        {demo && <DemoFaixa />}
         {somenteLeitura && (
           <div className="readonly-banner" role="status">
             <i className="bx bx-lock-alt" aria-hidden="true" />
@@ -186,13 +209,19 @@ export function AppLayout() {
             <span className="topbar__today">{fmtDataLonga(new Date().toISOString(), empresa.fusoHorario)}</span>
           </div>
           <div className="topbar__actions">
+            {tour && (
+              <button type="button" className="topbar__ajuda" data-tour="ajuda" onClick={tour.abrirAjuda} aria-haspopup="dialog" aria-label="Ajuda e passo a passo">
+                <i className="bx bx-help-circle" aria-hidden="true" />
+                <span className="hide-sm">Ajuda</span>
+              </button>
+            )}
             {podeEscrever('atendimentos:escrever') && (
-              <Button size="sm" icon="bx-plus" onClick={() => nav('/app/agenda?novo=1')} className="topbar__cta">
+              <Button size="sm" icon="bx-plus" onClick={() => nav('/app/agenda?novo=1')} className="topbar__cta" data-tour="novo-atendimento">
                 <span className="hide-xs">{r.novo(r.atendimento)}</span>
               </Button>
             )}
             <div className="topbar__user" ref={refMenu}>
-              <button type="button" className="topbar__avatar" aria-haspopup="menu" aria-expanded={menuUsuario} onClick={() => setMenuUsuario((v) => !v)}>
+              <button type="button" className="topbar__avatar" aria-haspopup="menu" aria-expanded={menuUsuario} aria-label={`Menu de ${usuario.nome}`} onClick={() => setMenuUsuario((v) => !v)}>
                 <Avatar nome={usuario.nome} size={36} cor="var(--action)" />
                 <i className="bx bx-chevron-down" aria-hidden="true" />
               </button>
@@ -229,11 +258,17 @@ export function AppLayout() {
                     role="menuitem"
                     className="is-danger"
                     onClick={async () => {
+                      if (demo) {
+                        nav('/', { replace: true });
+                        await new Promise((r) => setTimeout(r, 50));
+                        await logout();
+                        return;
+                      }
                       await logout();
                       nav('/login', { replace: true });
                     }}
                   >
-                    <i className="bx bx-log-out" aria-hidden="true" /> Sair
+                    <i className="bx bx-log-out" aria-hidden="true" /> {demo ? 'Sair da demonstração' : 'Sair'}
                   </button>
                 </div>
               )}

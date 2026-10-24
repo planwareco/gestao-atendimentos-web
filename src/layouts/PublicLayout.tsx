@@ -91,6 +91,14 @@ export function PublicLayout() {
               </a>
             ))}
             {!sessao && (
+              <Link to="/demo" onClick={() => setAberto(false)}>
+                <span>
+                  <i className="bx bx-play-circle" aria-hidden="true" /> Testar grátis
+                </span>
+                <i className="bx bx-chevron-right" aria-hidden="true" />
+              </Link>
+            )}
+            {!sessao && (
               <Link to="/admin/login" onClick={() => setAberto(false)}>
                 <span>
                   <i className="bx bx-shield-quarter" aria-hidden="true" /> Acesso do gestor

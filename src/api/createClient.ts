@@ -12,6 +12,8 @@ interface Opcoes<S> {
   lockName: string;
   /** Extrai o access token da resposta de refresh. */
   tokenFrom: (s: S) => string;
+  /** Quando verdadeiro, o refresh passa pelo próprio cliente (modo demonstração, sem cookie). */
+  refreshPeloCliente?: () => boolean;
 }
 
 type ConfigRetry = InternalAxiosRequestConfig & { _retry?: boolean };
@@ -29,7 +31,7 @@ export interface SessionClient<S> {
  * O refresh é deduplicado na aba (uma única Promise) e serializado entre abas
  * (Web Locks): a API derruba a sessão se o mesmo refresh token for reutilizado.
  */
-export function createSessionClient<S>({ refreshPath, lockName, tokenFrom }: Opcoes<S>): SessionClient<S> {
+export function createSessionClient<S>({ refreshPath, lockName, tokenFrom, refreshPeloCliente }: Opcoes<S>): SessionClient<S> {
   let accessToken: string | null = null;
   let emAndamento: Promise<S | null> | null = null;
   let perdeuSessao: () => void = () => {};
@@ -45,7 +47,9 @@ export function createSessionClient<S>({ refreshPath, lockName, tokenFrom }: Opc
     emAndamento ??= (async () => {
       const executar = async (): Promise<S | null> => {
         try {
-          const r = await axios.post<Envelope<S>>(`${API_URL}/v1${refreshPath}`, {}, { withCredentials: true });
+          const r = refreshPeloCliente?.()
+            ? await http.post<Envelope<S>>(refreshPath, {})
+            : await axios.post<Envelope<S>>(`${API_URL}/v1${refreshPath}`, {}, { withCredentials: true });
           accessToken = tokenFrom(r.data.data);
           return r.data.data;
         } catch {

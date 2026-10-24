@@ -65,14 +65,14 @@ export default function Atendimentos() {
         descricao="Todos os horários do período, com filtros por situação, cliente e profissional."
         acoes={
           podeEscrever('atendimentos:escrever') && (
-            <Button icon="bx-plus" onClick={() => setForm({ aberto: true })}>
+            <Button icon="bx-plus" onClick={() => setForm({ aberto: true })} data-tour="atendimento-novo">
               {r.novo(r.atendimento)}
             </Button>
           )
         }
       />
 
-      <div className="filtros card card--pad" data-aos="fade-up">
+      <div className="filtros card card--pad" data-aos="fade-up" data-tour="atendimentos-filtros">
         <div className="filtros__grid">
           <Input label="De" type="date" value={de} onChange={(e) => (setDe(e.target.value), setPage(1))} />
           <Input label="Até" type="date" value={ate} onChange={(e) => (setAte(e.target.value), setPage(1))} />
@@ -98,7 +98,7 @@ export default function Atendimentos() {
         </div>
       </div>
 
-      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60">
+      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60" data-tour="atendimentos-lista">
         {q.error ? (
           <ErrorState erro={q.error} onTentar={() => q.refetch()} />
         ) : q.isLoading ? (

@@ -176,7 +176,7 @@ export default function Agenda() {
     <div className="page page--agenda">
       <PageHeader titulo="Agenda" descricao="Clique num horário vazio para marcar. Arraste para remarcar." />
 
-      <div className="agenda-toolbar card" data-aos="fade-up">
+      <div className="agenda-toolbar card" data-aos="fade-up" data-tour="agenda-navegar">
         <div className="row">
           <Button variant="ghost" size="sm" iconOnly icon="bx-chevron-left" aria-label="Anterior" onClick={() => api()?.prev()} />
           <Button variant="ghost" size="sm" onClick={() => api()?.today()}>
@@ -202,6 +202,7 @@ export default function Agenda() {
             <span>Cancelados</span>
           </label>
           <Segmented<Visao>
+            tour="agenda-visao"
             label="Visualização"
             valor={visao}
             onChange={setVisao}
@@ -225,7 +226,7 @@ export default function Agenda() {
       {agenda.error && <ErrorState erro={agenda.error} onTentar={() => agenda.refetch()} />}
 
       {filtraProf && (profs.data?.items.length ?? 0) > 0 && (
-        <div className="legenda legenda--prof" aria-label="Cores dos profissionais">
+        <div className="legenda legenda--prof" aria-label="Cores dos profissionais" data-tour="agenda-cores">
           {profs.data!.items.map((p) => (
             <span key={p.id}>
               <i style={{ background: p.cor ?? 'var(--secondary)' }} /> {p.nome}
@@ -234,7 +235,7 @@ export default function Agenda() {
         </div>
       )}
 
-      <div className="agenda card" data-aos="fade-up" data-aos-delay="60">
+      <div className="agenda card" data-aos="fade-up" data-aos-delay="60" data-tour="agenda-calendario">
         <FullCalendar
           ref={calRef}
           plugins={[timeGridPlugin, dayGridPlugin, listPlugin, interactionPlugin]}

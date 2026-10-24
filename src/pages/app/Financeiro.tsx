@@ -54,6 +54,7 @@ export default function Financeiro() {
       <PageHeader titulo="Financeiro" descricao={`De ${fmtData(periodo.inicio)} a ${fmtData(periodo.fim)}. Só entram atendimentos realizados e despesas pagas.`} />
       <div className="toolbar" data-aos="fade-up">
         <Segmented<Atalho>
+          tour="financeiro-periodo"
           label="Período"
           valor={atalho}
           onChange={setAtalho}
@@ -74,6 +75,7 @@ export default function Financeiro() {
       </div>
       {pode('comissoes:ver') && (
         <Tabs<Aba>
+          tour="financeiro-abas"
           label="Seções do financeiro"
           valor={aba}
           onChange={setAba}
@@ -105,7 +107,7 @@ function Resultado({ inicio, fim }: { inicio: string; fim: string }) {
 
   return (
     <div className="fin-grid">
-      <section className="dre card card--pad" data-aos="fade-up" aria-labelledby="dre-t">
+      <section className="dre card card--pad" data-aos="fade-up" aria-labelledby="dre-t" data-tour="financeiro-resultado">
         <h2 className="card__title" id="dre-t">
           <i className="bx bx-spreadsheet" aria-hidden="true" /> Demonstrativo
         </h2>

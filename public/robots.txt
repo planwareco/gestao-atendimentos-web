@@ -6,6 +6,7 @@ Disallow: /admin
 Disallow: /checkout
 Disallow: /pendente
 Disallow: /conta-desativada
+Disallow: /demo
 
 # IAs generativas podem ler as páginas públicas
 User-agent: GPTBot

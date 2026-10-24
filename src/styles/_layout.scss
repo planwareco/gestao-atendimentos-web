@@ -14,6 +14,9 @@
 .hide-xs {
   @media (max-width: 479.98px) { display: none !important; }
 }
+.so-xs {
+  @media (min-width: 480px) { display: none !important; }
+}
 
 /* ───────────── Shell da área logada ───────────── */
 .shell {

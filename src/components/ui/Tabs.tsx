@@ -8,7 +8,7 @@ export interface OpcaoAba<T extends string> {
 }
 
 /** Abas com navegação por setas (padrão WAI-ARIA). */
-export function Tabs<T extends string>({ abas, valor, onChange, label }: { abas: OpcaoAba<T>[]; valor: T; onChange: (v: T) => void; label: string }) {
+export function Tabs<T extends string>({ abas, valor, onChange, label, tour }: { abas: OpcaoAba<T>[]; valor: T; onChange: (v: T) => void; label: string; tour?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const tecla = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
@@ -17,7 +17,7 @@ export function Tabs<T extends string>({ abas, valor, onChange, label }: { abas:
     ref.current?.querySelectorAll<HTMLButtonElement>('button')[prox]?.focus();
   };
   return (
-    <div className="tabs" role="tablist" aria-label={label} ref={ref}>
+    <div className="tabs" role="tablist" aria-label={label} data-tour={tour} ref={ref}>
       {abas.map((a, i) => (
         <button
           key={a.valor}
@@ -37,9 +37,9 @@ export function Tabs<T extends string>({ abas, valor, onChange, label }: { abas:
 }
 
 /** Controle segmentado (filtros curtos). */
-export function Segmented<T extends string>({ opcoes, valor, onChange, label }: { opcoes: OpcaoAba<T>[]; valor: T; onChange: (v: T) => void; label: string }) {
+export function Segmented<T extends string>({ opcoes, valor, onChange, label, tour }: { opcoes: OpcaoAba<T>[]; valor: T; onChange: (v: T) => void; label: string; tour?: string }) {
   return (
-    <div className="segmented" role="group" aria-label={label}>
+    <div className="segmented" role="group" aria-label={label} data-tour={tour}>
       {opcoes.map((o) => (
         <button key={o.valor} type="button" aria-pressed={o.valor === valor} onClick={() => onChange(o.valor)}>
           {o.icon && <i className={cn('bx', o.icon)} aria-hidden="true" style={{ marginRight: 4 }} />}

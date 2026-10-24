@@ -78,7 +78,7 @@ export default function Profissionais() {
         descricao="A cor identifica cada pessoa na agenda. A comissão é calculada quando o atendimento é realizado."
         acoes={
           escrever && (
-            <Button icon="bx-plus" onClick={() => setForm({ aberto: true })}>
+            <Button icon="bx-plus" onClick={() => setForm({ aberto: true })} data-tour="profissional-novo">
               Novo profissional
             </Button>
           )
@@ -115,7 +115,7 @@ export default function Profissionais() {
         </div>
       ) : (
         <>
-          <ul className="prof-grid">
+          <ul className="prof-grid" data-tour="profissionais-lista">
             {q.data.items.map((p, i) => (
               <li key={p.id} className={cn('prof-card', p.status === 'INATIVO' && 'is-inativo')} style={{ '--cor': p.cor ?? 'var(--secondary)' } as CSSProperties} data-aos="fade-up" data-aos-delay={(i % 6) * 50}>
                 <div className="prof-card__topo">

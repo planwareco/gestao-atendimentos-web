@@ -5,6 +5,7 @@ import { publicoApi } from '@/api/endpoints/publico';
 import type { ModuloCatalogo, Segmento, SegmentoPublico } from '@/api/types';
 import { Badge, StatusAtendimentoBadge } from '@/components/ui/Badge';
 import { Button, ButtonLink } from '@/components/ui/Button';
+import { SEGMENTOS_DEMO } from '@/demo/modo';
 import { ErrorState, Skeleton } from '@/components/ui/Feedback';
 import { cn } from '@/lib/cn';
 import { useDebounce, useTitulo } from '@/lib/hooks';
@@ -51,10 +52,13 @@ function Hero() {
             <ButtonLink to="/cadastro" size="lg" iconRight="bx-right-arrow-alt">
               Começar agora
             </ButtonLink>
-            <a href="#precos" className="btn btn--ghost btn--lg">
-              Ver preços
-            </a>
+            <ButtonLink to="/demo" size="lg" variant="ghost" icon="bx-play-circle">
+              Testar grátis
+            </ButtonLink>
           </div>
+          <p className="hero__nota" data-aos="fade-up" data-aos-delay="200">
+            <i className="bx bx-check-shield" aria-hidden="true" /> Teste com uma empresa de exemplo, sem cadastro e sem cartão.
+          </p>
         </div>
         <AgendaViva />
       </div>
@@ -289,6 +293,11 @@ function DemoSegmento() {
               </button>
             ))}
           </div>
+          {seg && SEGMENTOS_DEMO.includes(seg.codigo) && (
+            <ButtonLink to={`/demo?segmento=${seg.codigo.toLowerCase()}`} variant="soft" icon="bx-play-circle" className="demo__testar">
+              Testar como {seg.nome.toLowerCase()}
+            </ButtonLink>
+          )}
         </div>
 
         {seg && (
@@ -575,9 +584,14 @@ function ChamadaFinal() {
         <div className="cta-final__mesh" aria-hidden="true" />
         <h2 id="cta-titulo">Organize a agenda ainda nesta {saudacao}.</h2>
         <p>Crie a conta, escolha os módulos e pague a adesão. O resto a gente deixa pronto.</p>
-        <ButtonLink to="/cadastro" size="lg" variant="accent" iconRight="bx-right-arrow-alt">
-          Começar agora
-        </ButtonLink>
+        <div className="cta-final__botoes">
+          <ButtonLink to="/cadastro" size="lg" variant="accent" iconRight="bx-right-arrow-alt">
+            Começar agora
+          </ButtonLink>
+          <ButtonLink to="/demo" size="lg" variant="ghost" icon="bx-play-circle" className="cta-final__demo">
+            Testar grátis
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );

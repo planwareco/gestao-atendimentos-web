@@ -40,14 +40,14 @@ export default function Clientes() {
         descricao={q.data ? `${q.data.meta.total} ${q.data.meta.total === 1 ? r.cliente.toLowerCase() : r.clientes.toLowerCase()} encontrados` : undefined}
         acoes={
           podeEscrever('clientes:escrever') && (
-            <Button icon="bx-user-plus" onClick={() => setNovo(true)}>
+            <Button icon="bx-user-plus" onClick={() => setNovo(true)} data-tour="cliente-novo">
               {r.novo(r.cliente)}
             </Button>
           )
         }
       />
 
-      <div className="toolbar" data-aos="fade-up">
+      <div className="toolbar" data-aos="fade-up" data-tour="clientes-busca">
         <Input
           aria-label={`Buscar ${r.clientes.toLowerCase()}`}
           placeholder="Buscar por nome, e-mail, telefone ou documento"
@@ -80,7 +80,7 @@ export default function Clientes() {
         />
       </div>
 
-      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60">
+      <section className="card card--pad" data-aos="fade-up" data-aos-delay="60" data-tour="clientes-lista">
         {q.error ? (
           <ErrorState erro={q.error} onTentar={() => q.refetch()} />
         ) : q.isLoading ? (

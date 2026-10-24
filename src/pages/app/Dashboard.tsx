@@ -86,7 +86,7 @@ export default function Dashboard() {
         titulo="Visão geral"
         descricao={mesRef ? `Indicadores de ${mesRef}. Receita considera apenas ${r.atendimentos.toLowerCase()} realizados.` : 'Carregando indicadores...'}
         acoes={
-          <div className="row filtros-inline">
+          <div className="row filtros-inline" data-tour="periodo">
             <Select label="Ano" value={ano} onChange={(e) => setAno(Number(e.target.value))} fieldClassName="field--inline">
               {anos.map((a) => (
                 <option key={a} value={a}>
@@ -110,7 +110,7 @@ export default function Dashboard() {
         <ErrorState erro={dash.error} onTentar={() => dash.refetch()} />
       ) : (
         <>
-          <section className="kpis" aria-label="Indicadores do mês">
+          <section className="kpis" aria-label="Indicadores do mês" data-tour="kpis">
             <article className="kpi-hero" data-aos="fade-up">
               <div className="kpi-hero__mesh" aria-hidden="true" />
               <span className="kpi-hero__label">Entradas no mês</span>
@@ -139,7 +139,7 @@ export default function Dashboard() {
           </section>
 
           <div className="dash-grid">
-            <section className="card dash-grid__wide" data-aos="fade-up" aria-labelledby="g-es">
+            <section className="card dash-grid__wide" data-aos="fade-up" aria-labelledby="g-es" data-tour="grafico">
               <div className="card__head">
                 <h2 className="card__title" id="g-es">
                   <i className="bx bx-bar-chart-alt-2" aria-hidden="true" /> Entradas × saídas em {ano}
@@ -175,7 +175,7 @@ export default function Dashboard() {
               </div>
             </section>
 
-            <section className="card" data-aos="fade-up" aria-labelledby="g-hoje">
+            <section className="card" data-aos="fade-up" aria-labelledby="g-hoje" data-tour="hoje">
               <div className="card__head">
                 <h2 className="card__title" id="g-hoje">
                   <i className="bx bx-time-five" aria-hidden="true" /> Hoje
@@ -355,7 +355,7 @@ export default function Dashboard() {
               </div>
             </section>
 
-            <section className="card" data-aos="fade-up" aria-labelledby="g-reat">
+            <section className="card" data-aos="fade-up" aria-labelledby="g-reat" data-tour="reativar">
               <div className="card__head">
                 <h2 className="card__title" id="g-reat">
                   <i className="bx bx-user-voice" aria-hidden="true" /> Para reativar
