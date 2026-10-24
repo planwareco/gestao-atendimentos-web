@@ -481,7 +481,6 @@ function ModuloCard({ m, ligado, obrigatorio, onToggle, delay = 0 }: { m: Modulo
       onClick={onToggle}
       disabled={obrigatorio}
       aria-pressed={ligado}
-      data-aos="fade-up"
       data-aos-delay={delay}
     >
       <span className="modulo-card__icon" aria-hidden="true">
